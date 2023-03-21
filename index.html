@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+
+        . {
+            box-sizing: border-box;
+        }
+
+        input, td {
+            font-size: 12px;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .tableCells {
+            padding: 10px 0 10px 10px;
+        }
+
+        .tableRows {
+            padding: 10px 0 10px 10px;
+            height: 60px;
+        }
+
+        input {
+            height: 40px;
+            border: 1px solid #1a1a1a;
+            width: 350px;
+            border-radius: 6px;
+            padding: 0 0 0 10px;
+        }
+
+        button {
+            height: 42px;
+            padding: 0 30px 0 30px;
+            border: 0;
+            color: white;
+            background-color: #369823;
+            border-radius: 6px;
+        }
+
+    </style>
+</head>
+<body>
+<article style="width: 700px">
+    <div>
+        <h1 style="display: inline-block; margin-top: 0">SHOPPING CART</h1>
+        <div style="float: right; vertical-align: middle">
+            <p style="display: inline-block; margin-top: 0">Items Count: </p>
+            <p id="itemCounter" style="display: inline-block; padding-right: 40px; margin-top: 0"></p>
+        </div>
+    </div>
+    <br>
+    <div style="display: block">
+        <input style="display: inline-block" type="text" id="newItem" placeholder="New Product...">
+        <button onclick="addItemtoCart()">Add</button>
+    </div>
+    <p id="cartDisplay"></p>
+</article>
+</body>
+</html>
+
+<script>
+    let arr = [];
+
+    function addItemtoCart() {
+        let itemName = document.getElementById('newItem').value;
+        arr.push(itemName);
+        document.getElementById('cartDisplay').innerHTML = '';
+        displayCart();
+    }
+
+    function displayCart() {
+        let display = '<table border="0" cellspacing="0">';
+        for (let i = 0; i < arr.length; i++) {
+            if (i % 2 === 0) {
+                display += `<tr class="tableRows" style="background-color: white">
+                <td class="tableCells" style="width: 356px">${arr[i]}</td>
+                <td style="width: 100px;"><button onclick="editItem(${i})">Edit</button></td>
+                <td style="width: 150px"><button onclick="deleteItem(${i})">Delete</button></td>
+</tr>`
+            } else {
+                display += `<tr class="tableRows" style="background-color: #f3f3f3">
+                <td class="tableCells" style="width: 356px">${arr[i]}</td>
+                <td style="width: 100px;"><button onclick="editItem(${i})">Edit</button></td>
+                 <td style="width: 150px"><button onclick="deleteItem(${i})">Delete</button></td>
+</tr>`
+            }
+        }
+        display += `</table>`;
+        document.getElementById('cartDisplay').innerHTML = display;
+        document.getElementById('itemCounter').innerHTML = `${arr.length}`;
+    }
+
+    function deleteItem(id) {
+        arr.splice(id, 1);
+        console.log(arr);
+        displayCart();
+    }
+
+    function editItem(id) {
+        arr[id] = document.getElementById('newItem').value;
+        displayCart();
+    }
+</script>
